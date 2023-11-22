@@ -1,0 +1,8 @@
+
+
+type Component ={
+    Component: FC
+}
+
+
+
