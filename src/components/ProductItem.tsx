@@ -1,11 +1,10 @@
-import { Products } from "../util/ProductType";
 import { formartCurrency } from "../util/main";
 
 const ProductItem = ({
   _id,
   nameProduct,
   price,
-  category,
+  id_category,
   image,
 }: Products) => {
   return (
@@ -21,7 +20,9 @@ const ProductItem = ({
           <h2 className="name-product font-medium mb-1 h-12 overflow-hidden">
             {nameProduct}
           </h2>
-          <span className="text-sm text-gray-400">{category.name}</span>
+          <span className="text-sm text-gray-400">
+            {id_category.nameCategory}
+          </span>
           <div className="flex items-center text-sm justify-center my-2">
             <i className="fa-regular fa-star" />
             <i className="fa-regular fa-star" />

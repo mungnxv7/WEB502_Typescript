@@ -1,13 +1,14 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
-import ProductPage from "./pages/Products";
+
 import "./App.css";
 import Layout from "./pages/layout/layout";
 import HomePage from "./pages/HomePage";
 import ListProducts from "./pages/admin/ListProducts";
-import { LayoutAdmin } from "./pages/admin/LayoutAdmin";
-import { FormProduct } from "./pages/admin/FormProduct";
+import { LayoutAdmin } from "./pages/layout/LayoutAdmin";
+import { FormProduct } from "./pages/admin/FormAddProduct";
 import { ProductDetail } from "./pages/ProductDetail";
+import { FormUpdateProduct } from "./pages/admin/FormUpdateProducts";
 
 function App() {
   return (
@@ -16,7 +17,6 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout Component={HomePage} />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/product" element={<ProductPage />} />
           <Route
             path="/product/:id"
             element={<Layout Component={ProductDetail} />}
@@ -31,7 +31,7 @@ function App() {
           />
           <Route
             path="/admin/:id"
-            element={<LayoutAdmin Component={FormProduct} />}
+            element={<LayoutAdmin Component={FormUpdateProduct} />}
           />
         </Routes>
       </BrowserRouter>

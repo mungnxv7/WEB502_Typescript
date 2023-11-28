@@ -2,14 +2,13 @@ import { useEffect, useState } from "react";
 import Banner from "../components/Banner";
 // import ListProduct from "../components/ListProducts"
 import ProductItem from "../components/ProductItem";
-import { Products } from "../util/ProductType";
 import { API } from "../util/config";
 import { loadingPage } from "../util/main";
 const HomePage = () => {
   const [products, setProducts] = useState<Products[]>([]);
   useEffect(() => {
     loadingPage(true);
-    fetch(API)
+    fetch(`${API}/products`)
       .then((response) => response.json())
       .then((data) => {
         setProducts(data);
@@ -31,7 +30,7 @@ const HomePage = () => {
               _id={product._id}
               nameProduct={product.nameProduct}
               price={product.price}
-              category={product.category}
+              id_category={product.id_category}
               image={product.image}
             />
           );

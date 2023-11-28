@@ -166,6 +166,12 @@ body{
   .hidden_loading{
     display: none;
 }
+.active_nav_icon{
+  background-image: linear-gradient( to left, #ECAF82,#e48948);
+}
+.active_nav_text{
+  color: black;
+}
   @keyframes lds-roller {
     0% {
       transform: rotate(0deg);

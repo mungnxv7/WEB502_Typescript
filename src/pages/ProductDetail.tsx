@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { formartCurrency, loadingPage } from "../util/main";
-import { Products } from "../util/ProductType";
 import { API } from "../util/config";
 import ProductItem from "../components/ProductItem";
 export const ProductDetail = () => {
@@ -11,7 +10,7 @@ export const ProductDetail = () => {
   const { id } = useParams();
   useEffect(() => {
     loadingPage(true);
-    fetch(`${API}/${id}`)
+    fetch(`${API}/products/${id}`)
       .then((response) => response.json())
       .then((data) => {
         setProduct(data);
@@ -20,14 +19,14 @@ export const ProductDetail = () => {
 
   useEffect(() => {
     if (product) {
-      fetch(`${API}/same_product/${product?.category._id}`)
+      fetch(`${API}/products/same_product/${product?.id_category._id}`)
         .then((response) => response.json())
         .then((data) => {
           SetSameProduct(data);
         });
       loadingPage(false);
     }
-  });
+  }, [product]);
   return (
     <>
       <section className="py-10 font-poppins">
@@ -47,7 +46,7 @@ export const ProductDetail = () => {
               <div className="lg:pl-20">
                 <div className="mb-6 ">
                   <span className="px-2.5 py-0.5 text-xs bg-[#ECAF82] rounded-xl">
-                    {product?.category.name}
+                    {product?.id_category.nameCategory}
                   </span>
                   <h2 className="max-w-xl mt-6 mb-6 text-xl font-semibold leading-loose tracking-wide md:text-2xl">
                     {product?.nameProduct}
@@ -179,7 +178,7 @@ export const ProductDetail = () => {
                     _id={item._id}
                     nameProduct={item.nameProduct}
                     price={item.price}
-                    category={item.category}
+                    id_category={item.id_category}
                     image={item.image}
                   />
                 );

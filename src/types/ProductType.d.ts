@@ -1,12 +1,12 @@
 type CategoryProduct = {
     _id : string,
-    name : string,
+    nameCategory : string,
 }
 
-export type Products = {
+type Products = {
     _id:string
     nameProduct: string,
     price: number,
-    category: CategoryProduct,
+    id_category: CategoryProduct,
     image: string
 }

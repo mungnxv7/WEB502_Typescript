@@ -1,24 +1,21 @@
 import axios from "axios";
 import { useForm, SubmitHandler } from "react-hook-form";
 import localUserService from "../service/localService";
-interface IFormInput {
-  email: string;
-  password: string;
-}
+import bg_login from "../assets/bg-login.png";
+import { API } from "../util/config";
+
 const FormLogin = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormInput>();
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+  } = useForm<Login>();
+  const onSubmit: SubmitHandler<Login> = (data) => {
     if (data) {
       axios
-        .post(
-          "https://react-typescript-web-backend.vercel.app/user/signin",
-          data,
-          { headers: { "Content-Type": "application/json" } }
-        )
+        .post(`${API}/users/signin`, data, {
+          headers: { "Content-Type": "application/json" },
+        })
         .then((response) => {
           const userData = {
             ...response.data.isUser,
@@ -32,7 +29,10 @@ const FormLogin = () => {
   };
 
   return (
-    <div className="relative min-h-screen  bg-[url(bg-login.png)] bg-cover bg-no-repeat">
+    <div
+      className="relative min-h-screen bg-cover bg-no-repeat"
+      style={{ backgroundImage: `url(${bg_login})` }}
+    >
       <div className="absolute top-0 left-0 min-h-screen sm:flex sm:gap-10 w-full sm:flex-row justify-center bg-[rgba(0,0,0,0.4)]">
         <div className="flex-col flex  self-center lg:px-14 sm:max-w-4xl xl:max-w-md  z-10">
           <div className="self-start hidden lg:flex flex-col  text-gray-300">
@@ -70,7 +70,7 @@ const FormLogin = () => {
                       required: "Email không được bỏ trống",
                     })}
                     className=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-[#ECAF82]"
-                    type="text"
+                    type="email"
                     placeholder="Email"
                   />
                   {errors.email && (
@@ -84,6 +84,7 @@ const FormLogin = () => {
                     {...register("password", {
                       required: "Password không được để trống",
                     })}
+                    type="password"
                     placeholder="Password"
                     className="text-sm px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-[#ECAF82]"
                   />
