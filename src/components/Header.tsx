@@ -1,5 +1,10 @@
 import logo from "../assets/Genshin_Impact_logo.png";
+import localUserService from "../service/localService";
 const Header = () => {
+  const logOut = () => {
+    localUserService.remove();
+    window.location.reload();
+  };
   return (
     <header>
       <div className="container mx-auto flex items-center py-4">
@@ -30,11 +35,6 @@ const Header = () => {
                 Contact
               </a>
             </li>
-            <li>
-              <a className="nav_link font-bold p-5" href="/admin">
-                Admin
-              </a>
-            </li>
           </ul>
         </div>
         <div className="flex items-center ml-auto w-max">
@@ -48,12 +48,33 @@ const Header = () => {
             </button>
           </form>
           <div className="px-3 avatar relative">
-            <a href="/login">
-              <div className="bg-[#ECAF82] text-sm hover:bg-[#f0a36c] hover:text-white p-2 rounded-md cursor-pointer">
-                <span className="mr-2 font-medium">Login</span>
-                <i className="fa-solid fa-right-to-bracket"></i>
+            {localUserService.get() ? (
+              <div className="relative">
+                <p className="avatar text-gray-400 user">
+                  Hi!:{" "}
+                  <span className="capitalize">
+                    {localUserService.get().name}
+                  </span>
+                </p>
+                <div className="bg-white rounded-md w-40 py-1 user_menu">
+                  <ul>
+                    <li
+                      className="contronl_user hover:bg-[#ecaf82] hover:text-white duration-300 py-2 rounded-md pl-4"
+                      onClick={logOut}
+                    >
+                      Đăng xuất
+                    </li>
+                  </ul>
+                </div>
               </div>
-            </a>
+            ) : (
+              <a href="/login">
+                <div className="bg-[#ECAF82] text-sm hover:bg-[#f0a36c] hover:text-white p-2 rounded-md cursor-pointer">
+                  <span className="mr-2 font-medium">Login</span>
+                  <i className="fa-solid fa-right-to-bracket"></i>
+                </div>
+              </a>
+            )}
           </div>
         </div>
       </div>

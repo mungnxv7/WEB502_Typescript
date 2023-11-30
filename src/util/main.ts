@@ -1,4 +1,5 @@
-
+// const API = 'https://react-typescript-web-backend.vercel.app';
+const API = 'http://localhost:3000'
 
 const formartCurrency = (number?:number) =>{
     return number?.toLocaleString('vi-VN', {
@@ -13,4 +14,4 @@ const loadingPage = (status:boolean) =>{
     document.querySelector('.loading')?.classList.add('hidden_loading')
   }
 }
-export {formartCurrency,loadingPage}
+export {formartCurrency,loadingPage,API}

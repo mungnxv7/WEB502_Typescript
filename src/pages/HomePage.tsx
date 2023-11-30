@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Banner from "../components/Banner";
 // import ListProduct from "../components/ListProducts"
 import ProductItem from "../components/ProductItem";
-import { API } from "../util/config";
+import { API } from "../util/main";
 import { loadingPage } from "../util/main";
 const HomePage = () => {
   const [products, setProducts] = useState<Products[]>([]);

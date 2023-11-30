@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { formartCurrency, loadingPage } from "../util/main";
-import { API } from "../util/config";
+import { API } from "../util/main";
 import ProductItem from "../components/ProductItem";
 export const ProductDetail = () => {
   const [product, setProduct] = useState<Products | null>(null);
@@ -137,7 +137,8 @@ export const ProductDetail = () => {
                         </button>
                         <input
                           type="text"
-                          value="1"
+                          value={1}
+                          readOnly
                           className="flex items-center w-full font-semibold text-center text-black placeholder-gray-700 bg-gray-300 outline-none dark:placeholder-gray-400 focus:outline-none text-md"
                         />
                         <button className="w-20 h-full text-gray-600 bg-gray-300 border-l rounded-r outline-none cursor-pointer dark:text-gray-400 hover:text-gray-700 hover:bg-gray-400">

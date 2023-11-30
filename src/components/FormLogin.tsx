@@ -2,7 +2,7 @@ import axios from "axios";
 import { useForm, SubmitHandler } from "react-hook-form";
 import localUserService from "../service/localService";
 import bg_login from "../assets/bg-login.png";
-import { API } from "../util/config";
+import { API } from "../util/main";
 
 const FormLogin = () => {
   const {
@@ -17,13 +17,24 @@ const FormLogin = () => {
           headers: { "Content-Type": "application/json" },
         })
         .then((response) => {
-          const userData = {
-            ...response.data.isUser,
-            accessToken: response.data.accessToken,
-          };
-
-          localUserService.set(userData);
-          location.href = "/";
+          if (!response.data.isUser) {
+            return alert(response.data.message);
+          }
+          if (response.data.isUser.role === "admin") {
+            const userData = {
+              ...response.data.isUser,
+              accessToken: response.data.accessToken,
+            };
+            localUserService.set(userData);
+            location.href = "/admin";
+          } else {
+            const userData = {
+              ...response.data.isUser,
+              accessToken: response.data.accessToken,
+            };
+            localUserService.set(userData);
+            location.href = "/";
+          }
         });
     }
   };

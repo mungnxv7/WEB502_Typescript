@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { API } from "../../util/config";
+import { API } from "../../util/main";
 import validateProduct from "../../validations/productsValidate";
 import { configHeadres } from "../../config/config";
 
@@ -25,21 +25,40 @@ export const FormProduct = () => {
       [name]: value,
     });
   };
+  const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name } = e.target;
+    const file = e.target.files && e.target.files[0];
+    setForm({
+      ...form,
+      [name]: file,
+    });
+  };
+
+  console.log(form);
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
       const error = validateProduct(form);
       setErrorProduct(error);
-
       if (Object.keys(error).length === 0) {
         const data = { ...form, price: parseInt(form.price) };
+        console.log(data);
 
-        const reponse = await axios.post(`${API}/products`, data, {
-          headers: configHeadres,
-        });
-        const { messege } = reponse.data;
-        alert(messege);
+        const reponse = await axios.post(
+          `http://localhost:3000/products`,
+          data,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              ...configHeadres,
+            },
+          }
+        );
+        console.log(reponse);
+
+        const { message } = reponse.data;
+        alert(message);
         location.href = "/admin";
       }
     } catch (error) {
@@ -108,9 +127,9 @@ export const FormProduct = () => {
           </label>
           <input
             name="image"
-            type="text"
-            onChange={handleChange}
-            className="border rounded-md px-2 h-10 outline-gray-300 w-[300px] mt-2"
+            type="file"
+            onChange={handleChangeFile}
+            className="h-10 outline-gray-300 w-[300px] mt-2"
           />
           <p className="text-xs text-red-400">{errorProduct.image}</p>
         </div>

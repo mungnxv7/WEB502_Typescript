@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { formartCurrency } from "../../util/main";
-import { API } from "../../util/config";
+import { API } from "../../util/main";
 import { configHeadres } from "../../config/config";
 import axios from "axios";
 const ListProducts = () => {
@@ -23,7 +23,7 @@ const ListProducts = () => {
           axios
             .delete(`${API}/products/${id}`, { headers: configHeadres })
             .then((response) => {
-              alert(response.data.messege);
+              alert(response.data.message);
               fechProduct();
             });
         }

@@ -1,17 +1,17 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { API } from "../../util/config";
+import { API } from "../../util/main";
 import validateProduct from "../../validations/productsValidate";
 import { configHeadres } from "../../config/config";
 
 export const FormUpdateProduct = () => {
   const { id } = useParams();
   const [categories, setCategories] = useState<Categories[]>([]);
-  const [form, setForm] = useState<FormProduct>({
+  const [form, setForm] = useState<FormProductUpdate>({
     nameProduct: "",
     price: "",
-    image: "",
+    image: {},
     id_category: "",
   });
   const [errorProduct, setErrorProduct] = useState<ValidateProduct>(
@@ -43,7 +43,16 @@ export const FormUpdateProduct = () => {
       [name]: value,
     });
   };
+  console.log(form);
 
+  const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name } = e.target;
+    const file = e.target.files && e.target.files[0];
+    setForm({
+      ...form,
+      [name]: file,
+    });
+  };
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
@@ -52,12 +61,16 @@ export const FormUpdateProduct = () => {
 
       if (Object.keys(error).length === 0) {
         const data = { ...form, price: parseInt(form.price) };
+        console.log(data);
 
         const reponse = await axios.put(`${API}/products/${id}`, data, {
-          headers: configHeadres,
+          headers: {
+            "Content-Type": "multipart/form-data",
+            ...configHeadres,
+          },
         });
-        const { messege } = reponse.data;
-        alert(messege);
+        const { message } = reponse.data;
+        alert(message);
         location.href = "/admin";
       }
     } catch (error) {
@@ -128,12 +141,12 @@ export const FormUpdateProduct = () => {
           </label>
           <input
             name="image"
-            type="text"
-            value={form.image}
-            onChange={handleChange}
-            className="border rounded-md px-2 h-10 outline-gray-300 w-[300px] mt-2"
+            type="file"
+            onChange={handleChangeFile}
+            className="h-10 outline-gray-300 w-[300px] mt-2"
           />
           <p className="text-xs text-red-400">{errorProduct.image}</p>
+          <img src={form.image?.path} alt="" />
         </div>
         <div>
           <button className="px-4 py-2 bg-blue-500 rounded-md mt-12 text-white">

@@ -11,6 +11,10 @@ const localUserService = {
      if(jsonData){
         return JSON.parse(jsonData)
      }
+    },
+    remove: ()=>{
+        localStorage.removeItem(USER)
+        
     }
 }
 export default localUserService
