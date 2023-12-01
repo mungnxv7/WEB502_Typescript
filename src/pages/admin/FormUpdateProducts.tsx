@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
-import { API } from "../../util/main";
+import { API, loadingPage } from "../../util/main";
 import validateProduct from "../../validations/productsValidate";
 import { configHeadres } from "../../config/config";
 
@@ -43,7 +44,6 @@ export const FormUpdateProduct = () => {
       [name]: value,
     });
   };
-  console.log(form);
 
   const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name } = e.target;
@@ -58,20 +58,21 @@ export const FormUpdateProduct = () => {
       e.preventDefault();
       const error = validateProduct(form);
       setErrorProduct(error);
-
+      loadingPage(true);
       if (Object.keys(error).length === 0) {
         const data = { ...form, price: parseInt(form.price) };
-        console.log(data);
-
         const reponse = await axios.put(`${API}/products/${id}`, data, {
           headers: {
             "Content-Type": "multipart/form-data",
             ...configHeadres,
           },
         });
+        loadingPage(false);
         const { message } = reponse.data;
-        alert(message);
-        location.href = "/admin";
+        toast.success(message);
+        setTimeout(() => {
+          location.href = "/admin";
+        }, 1000);
       }
     } catch (error) {
       console.log(error);
@@ -146,7 +147,7 @@ export const FormUpdateProduct = () => {
             className="h-10 outline-gray-300 w-[300px] mt-2"
           />
           <p className="text-xs text-red-400">{errorProduct.image}</p>
-          <img src={form.image?.path} alt="" />
+          <img width={50} src={form.image?.path} alt="" />
         </div>
         <div>
           <button className="px-4 py-2 bg-blue-500 rounded-md mt-12 text-white">

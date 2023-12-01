@@ -37,7 +37,7 @@ export const ProductDetail = () => {
                 <div className="relative mb-6 lg:mb-10 lg:h-96">
                   <img
                     className="object-contain w-full lg:h-full"
-                    src={product?.image}
+                    src={product?.image.path}
                   />
                 </div>
               </div>

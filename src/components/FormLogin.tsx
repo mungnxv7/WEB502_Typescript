@@ -1,4 +1,6 @@
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useForm, SubmitHandler } from "react-hook-form";
 import localUserService from "../service/localService";
 import bg_login from "../assets/bg-login.png";
@@ -17,9 +19,6 @@ const FormLogin = () => {
           headers: { "Content-Type": "application/json" },
         })
         .then((response) => {
-          if (!response.data.isUser) {
-            return alert(response.data.message);
-          }
           if (response.data.isUser.role === "admin") {
             const userData = {
               ...response.data.isUser,
@@ -33,8 +32,14 @@ const FormLogin = () => {
               accessToken: response.data.accessToken,
             };
             localUserService.set(userData);
-            location.href = "/";
+            toast.success(response.data.message);
+            setTimeout(() => {
+              location.href = "/";
+            }, 1000);
           }
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
         });
     }
   };

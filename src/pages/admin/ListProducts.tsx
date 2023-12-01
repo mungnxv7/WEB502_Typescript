@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
-import { formartCurrency } from "../../util/main";
+import { toast } from "react-toastify";
+import { formartCurrency, loadingPage } from "../../util/main";
 import { API } from "../../util/main";
 import { configHeadres } from "../../config/config";
 import axios from "axios";
 const ListProducts = () => {
   const [products, setProducts] = useState<Products[]>([]);
   const fechProduct = () => {
+    loadingPage(true);
     fetch(`${API}/products`)
       .then((response) => response.json())
       .then((data) => {
+        loadingPage(false);
         setProducts(data);
       });
   };
@@ -23,8 +26,11 @@ const ListProducts = () => {
           axios
             .delete(`${API}/products/${id}`, { headers: configHeadres })
             .then((response) => {
-              alert(response.data.message);
+              toast.success(response.data.message);
               fechProduct();
+            })
+            .catch((error) => {
+              toast.error(error.response.data.message);
             });
         }
       }
@@ -35,9 +41,6 @@ const ListProducts = () => {
 
   return (
     <div>
-      <div className="py-5 rounded-lg px-3 bg-white border-l-4 border-[#ECAF82]">
-        <h2 className="font-medium">Quản lý sản phẩm</h2>
-      </div>
       <div className=" bg-white rounded-lg mt-5">
         <table className=" w-full mt-5 mb-0 align-top border-gray-200 text-slate-500 ">
           <thead className="align-bottom">
@@ -63,7 +66,7 @@ const ListProducts = () => {
                 <tr key={product._id}>
                   <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                     <div className="px-2 py-1">
-                      <img width={80} src={product.image} alt="" />
+                      <img width={80} src={product.image.path} alt="" />
                     </div>
                   </td>
                   <td className="p-2 align-middle bg-transparent border-b shadow-transparent">

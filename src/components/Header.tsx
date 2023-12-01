@@ -1,22 +1,38 @@
+import { useEffect, useState } from "react";
 import logo from "../assets/Genshin_Impact_logo.png";
 import localUserService from "../service/localService";
+import { logOut } from "../util/main";
 const Header = () => {
-  const logOut = () => {
-    localUserService.remove();
-    window.location.reload();
-  };
+  const [isSticky, setIsSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setIsSticky(true);
+      } else {
+        setIsSticky(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <header>
+    <header className={`fixed-screen ${isSticky ? "sticky" : ""}`}>
       <div className="container mx-auto flex items-center py-4">
         <div className="w-[322px]">
-          <a href="#">
+          <a href="/">
             <img width={200} src={logo} />
           </a>
         </div>
         <div>
           <ul className="flex">
             <li>
-              <a className="nav_link font-bold p-5 pl-0" href="#">
+              <a className="nav_link font-bold p-5 pl-0" href="/">
                 Home
               </a>
             </li>
@@ -50,8 +66,8 @@ const Header = () => {
           <div className="px-3 avatar relative">
             {localUserService.get() ? (
               <div className="relative">
-                <p className="avatar text-gray-400 user">
-                  Hi!:{" "}
+                <p className=" text-gray-400">
+                  Hi!:
                   <span className="capitalize">
                     {localUserService.get().name}
                   </span>

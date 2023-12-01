@@ -14,7 +14,7 @@ const ProductItem = ({
           new
         </span>
         <div className="overflow-hidden">
-          <img className="img" src={image} />
+          <img className="img" src={image.path} />
         </div>
         <div className="text-center">
           <h2 className="name-product font-medium mb-1 h-12 overflow-hidden">

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { API } from "../../util/main";
+import { toast } from "react-toastify";
+import { API, loadingPage } from "../../util/main";
 import validateProduct from "../../validations/productsValidate";
 import { configHeadres } from "../../config/config";
 
@@ -42,24 +43,20 @@ export const FormProduct = () => {
       const error = validateProduct(form);
       setErrorProduct(error);
       if (Object.keys(error).length === 0) {
+        loadingPage(true);
         const data = { ...form, price: parseInt(form.price) };
-        console.log(data);
-
-        const reponse = await axios.post(
-          `http://localhost:3000/products`,
-          data,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              ...configHeadres,
-            },
-          }
-        );
-        console.log(reponse);
-
+        const reponse = await axios.post(`${API}/products`, data, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            ...configHeadres,
+          },
+        });
+        loadingPage(false);
         const { message } = reponse.data;
-        alert(message);
-        location.href = "/admin";
+        toast.success(message);
+        setTimeout(() => {
+          location.href = "/admin";
+        }, 1000);
       }
     } catch (error) {
       console.log(error);
