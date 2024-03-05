@@ -11,7 +11,7 @@ export const LayoutAdmin = ({ Component }: Component) => {
         <SidebarAdmin />
         <div className="ease-soft-in-out float-right w-3/4 xl:ml-68.5 relative h-full rounded-xl transition-all duration-200 mt-4 mr-5">
           <div className="flex-auto px-0 pt-0 pb-2">
-            <div className="py-5 rounded-lg px-3 bg-white border-l-4 border-r-4 border-[#ECAF82] flex justify-end">
+            <div className="py-5 rounded-lg px-3 bg-white border-l-4 border-r-4 border-[#ECAF82] flex justify-end mb-5">
               <div className="avatar_user relative">
                 <div className="flex items-center">
                   <div className="mr-3">

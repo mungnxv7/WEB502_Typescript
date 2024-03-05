@@ -221,6 +221,8 @@ body{
 .active_nav_text{
   color: black;
 }
+
+
   @keyframes lds-roller {
     0% {
       transform: rotate(0deg);

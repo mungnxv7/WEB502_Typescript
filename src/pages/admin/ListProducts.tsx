@@ -41,8 +41,8 @@ const ListProducts = () => {
 
   return (
     <div>
-      <div className=" bg-white rounded-lg mt-5">
-        <table className=" w-full mt-5 mb-0 align-top border-gray-200 text-slate-500 ">
+      <div className=" bg-white rounded-lg">
+        <table className=" w-full mb-0 align-top border-gray-200 text-slate-500 ">
           <thead className="align-bottom">
             <tr>
               <th className="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none  border-b-solid tracking-none text-slate-400 opacity-70">
